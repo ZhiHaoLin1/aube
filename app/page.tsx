@@ -476,19 +476,18 @@ export default function Home() {
           <div className="section-shell">
             <div className="interactive-menu-grid">
               <div>
-                <p className="section-label" style={{ marginBottom: "0.95rem" }}>
-                  Interactive menu
-                </p>
-                <span
-                  className="menu-type"
-                  style={{
-                    display: "inline-block",
-                    marginBottom: "1rem",
-                    color: "var(--text-light)",
-                  }}
-                >
-                  Hover or wait to preview
-                </span>
+                <div style={{ display: "grid", gap: "0.8rem", marginBottom: "1.2rem" }}>
+                  <p className="section-label">Interactive menu</p>
+                  <span
+                    className="menu-type"
+                    style={{
+                      display: "block",
+                      color: "var(--text-light)",
+                    }}
+                  >
+                    Hover or wait to preview
+                  </span>
+                </div>
                 <h2 className="section-heading">
                   Let the menu
                   <br />
