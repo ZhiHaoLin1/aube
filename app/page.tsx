@@ -76,69 +76,69 @@ const operatorSignals = [
 ];
 
 const mostOrderedToday = [
-  { item: "Eggs Benedict", count: "14 plates", share: 92, note: "Lead plate" },
-  { item: "Croissant Basket", count: "11 orders", share: 74, note: "Pastry start" },
-  { item: "Brunch Cocktails", count: "9 rounds", share: 58, note: "Second round" },
+  { item: "Oeufs Benedict", count: "14 assiettes", share: 92, note: "Assiette phare" },
+  { item: "Corbeille de Viennoiseries", count: "11 commandes", share: 74, note: "Ouverture sucree" },
+  { item: "Cocktails du Brunch", count: "9 tournees", share: 58, note: "Deuxieme tour" },
 ];
 
 const menuFeatures: MenuFeature[] = [
   {
     key: "eggs-benedict",
-    label: "Signature plate",
-    title: "Eggs Benedict",
+    label: "Assiette signature",
+    title: "Oeufs Benedict",
     price: "$21",
-    teaser: "Silky hollandaise, smoked salmon, bright herbs, toasted bread.",
+    teaser: "Hollandaise soyeuse, saumon fume, herbes fraiches, pain grille.",
     detail:
-      "This is the plate that should stop people mid-scroll. Rich yolk, vivid sauce, and enough brightness to feel brunchy instead of heavy.",
-    note: "Best first order",
+      "C'est l'assiette qui doit arreter le regard en plein defilement. Jaune coulant, sauce vive, et juste assez de fraicheur pour rester brunch sans devenir lourde.",
+    note: "Premier choix",
     image: imageUrls.eggsClose,
     alt: "Close-up of eggs benedict with hollandaise",
-    ingredients: ["Poached eggs", "Smoked salmon", "Hollandaise", "Toasted bread"],
+    ingredients: ["Oeufs poches", "Saumon fume", "Hollandaise", "Pain grille"],
     surface:
       "linear-gradient(180deg, rgba(255, 244, 233, 0.96) 0%, rgba(255, 251, 246, 0.9) 100%)",
   },
   {
     key: "croissant-basket",
-    label: "Pastry service",
-    title: "Croissant Basket",
+    label: "Service de viennoiseries",
+    title: "Corbeille de Viennoiseries",
     price: "$14",
-    teaser: "Fresh laminated pastry baked every morning and served warm.",
+    teaser: "Viennoiseries maison cuites chaque matin et servies encore tiedes.",
     detail:
-      "Pastry is part of the mood here, not an afterthought. The site should feel like the room smells when the first tray lands.",
-    note: "Morning essential",
+      "La viennoiserie fait partie du decor ici, pas d'un detail ajoute a la fin. Le site doit sentir comme la salle au moment ou la premiere fournee arrive.",
+    note: "Indispensable du matin",
     image: imageUrls.croissants,
     alt: "Fresh croissants arranged on trays",
-    ingredients: ["House pastry", "Cultured butter", "Morning bake", "Shareable start"],
+    ingredients: ["Viennoiseries maison", "Beurre cultive", "Fournee du matin", "A partager"],
     surface:
       "linear-gradient(180deg, rgba(253, 240, 225, 0.96) 0%, rgba(255, 250, 244, 0.88) 100%)",
   },
   {
     key: "eggs-table",
-    label: "From the stove",
-    title: "French Omelette",
+    label: "Depuis les fourneaux",
+    title: "Omelette aux Fines Herbes",
     price: "$19",
-    teaser: "Soft-folded eggs with herbs, cheese, and a plate that feels unmistakably brunch.",
+    teaser: "Oeufs plies tout en douceur, fines herbes, fromage, et une assiette tres brunch.",
     detail:
-      "The omelette adds a cleaner, brighter dish to the rotation so the page stops leaning on the exact same brunch plate every time it needs appetite.",
-    note: "Lighter plate",
+      "L'omelette apporte une option plus nette et plus legere dans la rotation, pour que la page n'ait pas toujours besoin de la meme assiette riche pour ouvrir l'appetit.",
+    note: "Assiette plus legere",
     image: imageUrls.frenchOmelette,
     alt: "French omelette plated with herbs",
-    ingredients: ["Soft eggs", "Fine herbs", "Gruyere", "Morning plate"],
+    ingredients: ["Oeufs souples", "Fines herbes", "Gruyere", "Assiette du matin"],
     surface:
       "linear-gradient(180deg, rgba(248, 243, 236, 0.96) 0%, rgba(255, 251, 246, 0.88) 100%)",
   },
   {
     key: "cocktails",
-    label: "Second round",
-    title: "Brunch Cocktails",
+    label: "Deuxieme tour",
+    title: "Cocktails du Brunch",
     price: "$12+",
-    teaser: "Citrus-forward drinks and a table that gets louder in a good way.",
+    teaser: "Des verres agrumes et une table qui monte doucement en volume, comme il faut.",
     detail:
-      "The drinks photo brings in people, sunlight, and that mid-brunch energy shift. It keeps Aube from feeling like a food shoot without a room around it.",
-    note: "Stay longer energy",
+      "La photo des boissons amene des gens, de la lumiere, et ce changement d'energie du milieu de service. Elle empeche Aube de ressembler a une simple serie d'assiettes sans salle autour.",
+    note: "On reste encore",
     image: imageUrls.cheers,
     alt: "Friends toasting brunch cocktails",
-    ingredients: ["Citrus", "Sparkling pours", "Shared table", "Late brunch mood"],
+    ingredients: ["Agrumes", "Bulles", "Table partagee", "Fin de brunch"],
     surface:
       "linear-gradient(180deg, rgba(255, 236, 223, 0.96) 0%, rgba(255, 248, 242, 0.9) 100%)",
   },
@@ -504,7 +504,7 @@ export default function Home() {
             <div className="interactive-menu-grid">
               <div>
                 <div style={{ display: "grid", gap: "0.8rem", marginBottom: "1.2rem" }}>
-                  <p className="section-label">Interactive menu</p>
+                  <p className="section-label">Menu interactif</p>
                   <span
                     className="menu-type"
                     style={{
@@ -512,13 +512,13 @@ export default function Home() {
                       color: "var(--text-light)",
                     }}
                   >
-                    Hover or wait to preview
+                    Survolez ou laissez l&apos;apercu defiler
                   </span>
                 </div>
                 <h2 className="section-heading">
-                  Let the menu
+                  Laissez le menu
                   <br />
-                  feel alive.
+                  prendre vie.
                 </h2>
 
                 <div
@@ -611,7 +611,7 @@ export default function Home() {
                 <div className="interactive-preview-head">
                   <div>
                     <span className="menu-type" style={{ color: "var(--accent)" }}>
-                      Previewing now
+                      En apercu
                     </span>
                     <strong>{activeFeature.title}</strong>
                   </div>
