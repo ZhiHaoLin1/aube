@@ -268,7 +268,7 @@ export default function Home() {
                 transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
               >
                 <div className="hero-copy-panel">
-                  <div style={{ display: "grid", gap: "0.55rem", marginBottom: "1rem" }}>
+                  <div style={{ display: "grid", gap: "0.8rem", marginBottom: "1.2rem" }}>
                     <p className="section-label">French brunch house</p>
                     <span
                       className="menu-type"
@@ -837,23 +837,23 @@ export default function Home() {
         }
 
         .hero-heading {
-          font-size: clamp(4.5rem, 9.5vw, 7.9rem);
-          max-width: 46rem;
+          font-size: clamp(3.6rem, 8.2vw, 6.1rem);
+          max-width: 33rem;
         }
 
         .section-heading {
-          font-size: clamp(3.4rem, 6vw, 5.3rem);
+          font-size: clamp(2.7rem, 5.2vw, 4.25rem);
         }
 
         .hero-copy-shell {
           position: relative;
           z-index: 3;
-          margin-right: -7.5rem;
-          padding-top: 1.6rem;
+          margin-right: -3rem;
+          padding-top: 1.2rem;
         }
 
         .hero-copy-panel {
-          max-width: 39rem;
+          max-width: 34rem;
         }
 
         .hero-body,
@@ -867,7 +867,7 @@ export default function Home() {
         }
 
         .hero-body {
-          max-width: 26rem;
+          max-width: 28rem;
         }
 
         .hero-body {
@@ -913,9 +913,9 @@ export default function Home() {
 
         .hero-collage {
           position: relative;
-          min-height: 43rem;
-          margin-left: -4.8rem;
-          padding-top: 2.8rem;
+          min-height: 41rem;
+          margin-left: -2rem;
+          padding-top: 2rem;
         }
 
         .hero-main-photo,

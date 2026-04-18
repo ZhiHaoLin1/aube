@@ -1,8 +1,4 @@
-import Image from "next/image";
 import Link from "next/link";
-
-const coffeeImageUrl =
-  "https://pub-3fc6787160b4478f981aa86718fca41d.r2.dev/coffee.jpeg";
 
 const navLinks = [
   { label: "Menu", href: "/menu" },
@@ -54,24 +50,6 @@ export default function Footer() {
               Pastries do not wait. The first trays land early, the coffee is already
               moving, and the room feels better when people arrive before the rush.
             </p>
-          </div>
-
-          <div
-            style={{
-              position: "relative",
-              minHeight: "12rem",
-              overflow: "hidden",
-              borderRadius: "0 26px 0 26px",
-              boxShadow: "0 20px 50px rgba(0,0,0,0.25)",
-            }}
-          >
-            <Image
-              src={coffeeImageUrl}
-              alt="Coffee at Aube"
-              fill
-              sizes="(max-width: 900px) 100vw, 40vw"
-              style={{ objectFit: "cover" }}
-            />
           </div>
         </div>
 
@@ -216,21 +194,16 @@ export default function Footer() {
 
       <style>{`
         .footer-close-grid {
-          display: grid;
-          grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
-          gap: 2rem;
-          align-items: center;
+          display: block;
         }
 
         @media (max-width: 900px) {
-          .footer-close-grid,
           .footer-grid {
             grid-template-columns: 1fr 1fr !important;
           }
         }
 
         @media (max-width: 600px) {
-          .footer-close-grid,
           .footer-grid {
             grid-template-columns: 1fr !important;
           }
