@@ -185,6 +185,7 @@ export default function Home() {
   const [activeFeatureIndex, setActiveFeatureIndex] = useState(0);
   const [menuPaused, setMenuPaused] = useState(false);
   const [activeFlowIndex, setActiveFlowIndex] = useState(0);
+  const [isMobileLayout, setIsMobileLayout] = useState(false);
 
   const activeFeature = menuFeatures[activeFeatureIndex] ?? menuFeatures[0];
   const activeFlow = brunchFlow[activeFlowIndex] ?? brunchFlow[0];
@@ -200,7 +201,29 @@ export default function Home() {
   const heroMediaY = useTransform(scrollY, [0, 500], [0, prefersReducedMotion ? 0 : 22]);
 
   useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 720px)");
+    const updateLayout = (event: MediaQueryList | MediaQueryListEvent) => {
+      setIsMobileLayout(event.matches);
+
+      if (event.matches) {
+        setActiveFlowIndex(0);
+      }
+    };
+
+    updateLayout(mediaQuery);
+
+    const listener = (event: MediaQueryListEvent) => updateLayout(event);
+    mediaQuery.addEventListener("change", listener);
+
+    return () => mediaQuery.removeEventListener("change", listener);
+  }, []);
+
+  useEffect(() => {
     if (menuPaused) {
+      return undefined;
+    }
+
+    if (isMobileLayout) {
       return undefined;
     }
 
@@ -209,10 +232,14 @@ export default function Home() {
     }, 3200);
 
     return () => window.clearInterval(intervalId);
-  }, [menuPaused]);
+  }, [isMobileLayout, menuPaused]);
 
   useMotionValueEvent(flowProgress, "change", (latest) => {
     if (prefersReducedMotion) {
+      return;
+    }
+
+    if (isMobileLayout) {
       return;
     }
 
@@ -500,47 +527,91 @@ export default function Home() {
 
                 <div
                   className="interactive-menu-list"
-                  onMouseEnter={() => setMenuPaused(true)}
-                  onMouseLeave={() => setMenuPaused(false)}
+                  onMouseEnter={() => {
+                    if (!isMobileLayout) {
+                      setMenuPaused(true);
+                    }
+                  }}
+                  onMouseLeave={() => {
+                    if (!isMobileLayout) {
+                      setMenuPaused(false);
+                    }
+                  }}
                 >
                   {menuFeatures.map((feature, index) => {
                     const isActive = activeFeature.key === feature.key;
 
                     return (
-                      <button
-                        key={feature.key}
-                        type="button"
-                        className={`interactive-menu-button${isActive ? " is-active" : ""}`}
-                        onMouseEnter={() => setActiveFeatureIndex(index)}
-                        onFocus={() => {
-                          setMenuPaused(true);
-                          setActiveFeatureIndex(index);
-                        }}
-                        onBlur={() => setMenuPaused(false)}
-                        onClick={() => setActiveFeatureIndex(index)}
-                      >
-                        <div>
-                          <span
-                            className="menu-type"
-                            style={{ color: isActive ? "var(--accent)" : "var(--text-light)" }}
+                      <div key={feature.key} className="interactive-menu-item">
+                        <button
+                          type="button"
+                          className={`interactive-menu-button${isActive ? " is-active" : ""}`}
+                          onMouseEnter={() => {
+                            if (!isMobileLayout) {
+                              setActiveFeatureIndex(index);
+                            }
+                          }}
+                          onFocus={() => {
+                            setMenuPaused(true);
+                            setActiveFeatureIndex(index);
+                          }}
+                          onBlur={() => {
+                            if (!isMobileLayout) {
+                              setMenuPaused(false);
+                            }
+                          }}
+                          onClick={() => setActiveFeatureIndex(index)}
+                        >
+                          <div>
+                            <span
+                              className="menu-type"
+                              style={{ color: isActive ? "var(--accent)" : "var(--text-light)" }}
+                            >
+                              {feature.label}
+                            </span>
+                            <h3>{feature.title}</h3>
+                          </div>
+                          <strong>{feature.price}</strong>
+                          <p>{feature.teaser}</p>
+                        </button>
+
+                        {isMobileLayout && isActive ? (
+                          <motion.div
+                            className="interactive-mobile-preview"
+                            initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
                           >
-                            {feature.label}
-                          </span>
-                          <h3>{feature.title}</h3>
-                        </div>
-                        <strong>{feature.price}</strong>
-                        <p>{feature.teaser}</p>
-                      </button>
+                            <div className="interactive-mobile-preview-media">
+                              <Image
+                                src={feature.image}
+                                alt={feature.alt}
+                                fill
+                                sizes="100vw"
+                                style={{ objectFit: "cover" }}
+                              />
+                            </div>
+
+                            <div className="interactive-mobile-preview-copy">
+                              <span className="menu-type" style={{ color: "var(--accent)" }}>
+                                {feature.note}
+                              </span>
+                              <p>{feature.detail}</p>
+                            </div>
+                          </motion.div>
+                        ) : null}
+                      </div>
                     );
                   })}
                 </div>
               </div>
 
-              <div
-                className="interactive-detail-shell"
-                onMouseEnter={() => setMenuPaused(true)}
-                onMouseLeave={() => setMenuPaused(false)}
-              >
+              {!isMobileLayout ? (
+                <div
+                  className="interactive-detail-shell"
+                  onMouseEnter={() => setMenuPaused(true)}
+                  onMouseLeave={() => setMenuPaused(false)}
+                >
                 <div className="interactive-preview-head">
                   <div>
                     <span className="menu-type" style={{ color: "var(--accent)" }}>
@@ -607,7 +678,8 @@ export default function Home() {
                     </div>
                   </motion.div>
                 </AnimatePresence>
-              </div>
+                </div>
+              ) : null}
             </div>
           </div>
         </motion.section>
@@ -734,6 +806,38 @@ export default function Home() {
                 </motion.div>
               </div>
             </div>
+
+            {isMobileLayout ? (
+              <div className="brunch-flow-mobile-gallery">
+                {brunchFlow.map((step, index) => {
+                  const isActive = index === activeFlowIndex;
+
+                  return (
+                    <button
+                      key={step.time}
+                      type="button"
+                      className={`brunch-flow-mobile-card${isActive ? " is-active" : ""}`}
+                      onClick={() => setActiveFlowIndex(index)}
+                    >
+                      <div className="brunch-flow-mobile-media">
+                        <Image
+                          src={step.image}
+                          alt={step.alt}
+                          fill
+                          sizes="100vw"
+                          style={{ objectFit: "cover" }}
+                        />
+                      </div>
+                      <div className="brunch-flow-mobile-copy">
+                        <span className="menu-type">{step.time}</span>
+                        <strong>{step.title}</strong>
+                        <p>{step.phase}</p>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            ) : null}
           </div>
         </motion.section>
 
@@ -1109,6 +1213,11 @@ export default function Home() {
           gap: 0.8rem;
         }
 
+        .interactive-menu-item {
+          display: grid;
+          gap: 0.8rem;
+        }
+
         .interactive-menu-button {
           width: 100%;
           text-align: left;
@@ -1300,6 +1409,28 @@ export default function Home() {
           text-transform: uppercase;
         }
 
+        .interactive-mobile-preview {
+          display: grid;
+          gap: 0.9rem;
+          padding: 0.35rem 0 1rem;
+          border-bottom: 1px solid var(--border);
+        }
+
+        .interactive-mobile-preview-media {
+          position: relative;
+          min-height: 14rem;
+          overflow: hidden;
+          border-radius: 18px;
+          box-shadow: var(--shadow-sm);
+        }
+
+        .interactive-mobile-preview-copy p {
+          margin-top: 0.6rem;
+          color: var(--text-muted);
+          font-size: 0.92rem;
+          line-height: 1.72;
+        }
+
         .brunch-flow-grid {
           display: grid;
           grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
@@ -1307,6 +1438,10 @@ export default function Home() {
           align-items: center;
           position: relative;
           z-index: 1;
+        }
+
+        .brunch-flow-mobile-gallery {
+          display: none;
         }
 
         .brunch-flow-ambient {
@@ -1476,6 +1611,44 @@ export default function Home() {
           color: var(--text-muted);
           font-size: 0.95rem;
           line-height: 1.76;
+        }
+
+        .brunch-flow-mobile-card {
+          border: 1px solid var(--border);
+          background: rgba(255, 250, 245, 0.88);
+          text-align: left;
+          padding: 0.8rem;
+          box-shadow: var(--shadow-sm);
+        }
+
+        .brunch-flow-mobile-card.is-active {
+          border-color: var(--accent);
+        }
+
+        .brunch-flow-mobile-media {
+          position: relative;
+          min-height: 13rem;
+          overflow: hidden;
+          border-radius: 16px;
+          margin-bottom: 0.8rem;
+        }
+
+        .brunch-flow-mobile-copy strong {
+          display: block;
+          margin-top: 0.45rem;
+          font-family: var(--font-display);
+          font-size: 1.85rem;
+          line-height: 0.92;
+          letter-spacing: -0.04em;
+          color: var(--text);
+        }
+
+        .brunch-flow-mobile-copy p {
+          margin-top: 0.35rem;
+          color: var(--text-light);
+          font-size: 0.78rem;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
         }
 
         .closing-grid {
@@ -1650,6 +1823,16 @@ export default function Home() {
 
           .interactive-detail-flag {
             display: grid;
+          }
+
+          .brunch-flow-media {
+            display: none;
+          }
+
+          .brunch-flow-mobile-gallery {
+            display: grid;
+            gap: 1rem;
+            margin-top: 1.5rem;
           }
         }
       `}</style>
