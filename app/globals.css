@@ -275,6 +275,7 @@ img {
 }
 
 .sticky-reserve-shell {
+  position: relative;
   width: min(1040px, calc(100% - 1.5rem));
   margin: 0 auto;
   padding: 0.85rem 1rem;
@@ -288,6 +289,23 @@ img {
   justify-content: space-between;
   gap: 1rem;
   pointer-events: auto;
+}
+
+.sticky-reserve-close {
+  position: absolute;
+  top: -0.55rem;
+  right: 0.45rem;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: rgba(255, 249, 242, 0.98);
+  color: var(--text);
+  font-family: var(--font-menu);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
 }
 
 .sticky-reserve-copy {
@@ -358,6 +376,11 @@ img {
   .sticky-reserve-shell {
     border-radius: 28px;
     align-items: flex-start;
+  }
+
+  .sticky-reserve-close {
+    top: 0.55rem;
+    right: 0.55rem;
   }
 
   .sticky-reserve-copy {

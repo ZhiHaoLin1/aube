@@ -520,10 +520,6 @@ export default function Home() {
                   <br />
                   feel alive.
                 </h2>
-                <p className="section-body">
-                  The preview now rotates on its own, changes instantly on hover, and makes
-                  the interaction obvious enough that people feel the site responding.
-                </p>
 
                 <div
                   className="interactive-menu-list"
@@ -721,11 +717,6 @@ export default function Home() {
                   <br />
                   Actual service logic.
                 </h2>
-                <p className="section-body">
-                  This is the standout interaction on the page now. The timeline advances as
-                  you scroll, the active state moves, and the visual on the right changes with
-                  the room instead of sitting there like another static block.
-                </p>
 
                 <div className="brunch-flow-timeline">
                   <div className="brunch-flow-line">
@@ -813,11 +804,11 @@ export default function Home() {
                   const isActive = index === activeFlowIndex;
 
                   return (
-                    <button
+                    <motion.article
                       key={step.time}
-                      type="button"
                       className={`brunch-flow-mobile-card${isActive ? " is-active" : ""}`}
-                      onClick={() => setActiveFlowIndex(index)}
+                      onViewportEnter={() => setActiveFlowIndex(index)}
+                      viewport={{ amount: 0.6 }}
                     >
                       <div className="brunch-flow-mobile-media">
                         <Image
@@ -831,9 +822,11 @@ export default function Home() {
                       <div className="brunch-flow-mobile-copy">
                         <span className="menu-type">{step.time}</span>
                         <strong>{step.title}</strong>
-                        <p>{step.phase}</p>
+                        <span className="brunch-flow-mobile-status">{step.status}</span>
+                        <p>{step.copy}</p>
+                        <span className="brunch-flow-mobile-phase">{step.phase}</span>
                       </div>
-                    </button>
+                    </motion.article>
                   );
                 })}
               </div>
@@ -1619,10 +1612,18 @@ export default function Home() {
           text-align: left;
           padding: 0.8rem;
           box-shadow: var(--shadow-sm);
+          transition:
+            border-color 0.24s ease,
+            box-shadow 0.24s ease,
+            transform 0.24s ease,
+            background 0.24s ease;
         }
 
         .brunch-flow-mobile-card.is-active {
           border-color: var(--accent);
+          background: rgba(255, 245, 238, 0.96);
+          box-shadow: 0 20px 40px rgba(179, 93, 61, 0.14);
+          transform: translateY(-4px);
         }
 
         .brunch-flow-mobile-media {
@@ -1644,6 +1645,24 @@ export default function Home() {
         }
 
         .brunch-flow-mobile-copy p {
+          margin-top: 0.55rem;
+          color: var(--text-muted);
+          font-size: 0.92rem;
+          line-height: 1.7;
+        }
+
+        .brunch-flow-mobile-status {
+          display: inline-flex;
+          margin-top: 0.55rem;
+          font-family: var(--font-menu);
+          font-size: 0.72rem;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          color: var(--accent);
+        }
+
+        .brunch-flow-mobile-phase {
+          display: inline-flex;
           margin-top: 0.35rem;
           color: var(--text-light);
           font-size: 0.78rem;
@@ -1758,7 +1777,15 @@ export default function Home() {
 
         @media (max-width: 720px) {
           section:first-of-type {
-            padding-top: 7.6rem !important;
+            padding-top: 6.6rem !important;
+          }
+
+          .home-hero-grid {
+            gap: 1.2rem;
+          }
+
+          .hero-collage {
+            order: -1;
           }
 
           .hero-actions {
@@ -1826,6 +1853,10 @@ export default function Home() {
           }
 
           .brunch-flow-media {
+            display: none;
+          }
+
+          .brunch-flow-timeline {
             display: none;
           }
 

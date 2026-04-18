@@ -26,6 +26,7 @@ export default function StickyReserveBar() {
   const { scrollY } = useScroll();
   const [compact, setCompact] = useState(false);
   const [signalIndex, setSignalIndex] = useState(0);
+  const [dismissed, setDismissed] = useState(false);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     setCompact(latest > 220);
@@ -40,6 +41,10 @@ export default function StickyReserveBar() {
   }, []);
 
   const activeSignal = reserveSignals[signalIndex] ?? reserveSignals[0];
+
+  if (dismissed) {
+    return null;
+  }
 
   return (
     <motion.div
@@ -61,6 +66,15 @@ export default function StickyReserveBar() {
         }}
         transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
       >
+        <button
+          type="button"
+          className="sticky-reserve-close"
+          aria-label="Close reserve bar"
+          onClick={() => setDismissed(true)}
+        >
+          x
+        </button>
+
         <div className="sticky-reserve-copy">
           <span className="menu-type" style={{ color: "var(--accent)" }}>
             {activeSignal.eyebrow}
