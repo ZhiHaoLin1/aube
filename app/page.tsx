@@ -1,6 +1,6 @@
 "use client";
 
-import Image, { type StaticImageData } from "next/image";
+import Image from "next/image";
 import Link from "next/link";
 import {
   AnimatePresence,
@@ -13,14 +13,24 @@ import {
 import { useEffect, useRef, useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import briochePerdueImage from "@/pictures/briocheperdue.jpeg";
-import cheersImage from "@/pictures/cheers.jpeg";
-import croqueMadameImage from "@/pictures/croquemadame.jpeg";
-import croqueMadameCloseImage from "@/pictures/croquemadame2.jpeg";
-import croissantsImage from "@/pictures/croissants.jpeg";
-import frenchOmeletteImage from "@/pictures/french omelette.jpeg";
-import eggsCloseImage from "@/pictures/eggsben.jpeg";
-import eggsTopImage from "@/pictures/eggsben2.jpeg";
+
+const imageUrls = {
+  briochePerdue:
+    "https://pub-3fc6787160b4478f981aa86718fca41d.r2.dev/briocheperdue.jpeg",
+  cheers: "https://pub-3fc6787160b4478f981aa86718fca41d.r2.dev/cheers.jpeg",
+  croissants:
+    "https://pub-3fc6787160b4478f981aa86718fca41d.r2.dev/croissants.jpeg",
+  croqueMadame:
+    "https://pub-3fc6787160b4478f981aa86718fca41d.r2.dev/croquemadame.jpeg",
+  croqueMadameClose:
+    "https://pub-3fc6787160b4478f981aa86718fca41d.r2.dev/croquemadame2.jpeg",
+  eggsClose:
+    "https://pub-3fc6787160b4478f981aa86718fca41d.r2.dev/eggsben.jpeg",
+  eggsTop:
+    "https://pub-3fc6787160b4478f981aa86718fca41d.r2.dev/eggsben2.jpeg",
+  frenchOmelette:
+    "https://pub-3fc6787160b4478f981aa86718fca41d.r2.dev/french%20omelette.jpeg",
+} as const;
 
 type MenuFeature = {
   key: string;
@@ -30,7 +40,7 @@ type MenuFeature = {
   teaser: string;
   detail: string;
   note: string;
-  image: StaticImageData;
+  image: string;
   alt: string;
   ingredients: string[];
   surface: string;
@@ -43,7 +53,7 @@ type FlowStep = {
   status: string;
   phase: string;
   tone: string;
-  image: StaticImageData;
+  image: string;
   alt: string;
 };
 
@@ -81,7 +91,7 @@ const menuFeatures: MenuFeature[] = [
     detail:
       "This is the plate that should stop people mid-scroll. Rich yolk, vivid sauce, and enough brightness to feel brunchy instead of heavy.",
     note: "Best first order",
-    image: eggsCloseImage,
+    image: imageUrls.eggsClose,
     alt: "Close-up of eggs benedict with hollandaise",
     ingredients: ["Poached eggs", "Smoked salmon", "Hollandaise", "Toasted bread"],
     surface:
@@ -96,7 +106,7 @@ const menuFeatures: MenuFeature[] = [
     detail:
       "Pastry is part of the mood here, not an afterthought. The site should feel like the room smells when the first tray lands.",
     note: "Morning essential",
-    image: croissantsImage,
+    image: imageUrls.croissants,
     alt: "Fresh croissants arranged on trays",
     ingredients: ["House pastry", "Cultured butter", "Morning bake", "Shareable start"],
     surface:
@@ -111,7 +121,7 @@ const menuFeatures: MenuFeature[] = [
     detail:
       "The omelette adds a cleaner, brighter dish to the rotation so the page stops leaning on the exact same brunch plate every time it needs appetite.",
     note: "Lighter plate",
-    image: frenchOmeletteImage,
+    image: imageUrls.frenchOmelette,
     alt: "French omelette plated with herbs",
     ingredients: ["Soft eggs", "Fine herbs", "Gruyere", "Morning plate"],
     surface:
@@ -126,7 +136,7 @@ const menuFeatures: MenuFeature[] = [
     detail:
       "The drinks photo brings in people, sunlight, and that mid-brunch energy shift. It keeps Aube from feeling like a food shoot without a room around it.",
     note: "Stay longer energy",
-    image: cheersImage,
+    image: imageUrls.cheers,
     alt: "Friends toasting brunch cocktails",
     ingredients: ["Citrus", "Sparkling pours", "Shared table", "Late brunch mood"],
     surface:
@@ -143,7 +153,7 @@ const brunchFlow: FlowStep[] = [
     status: "The fastest walk-in window of the day.",
     phase: "Quiet open",
     tone: "rgba(207, 153, 81, 0.12)",
-    image: croissantsImage,
+    image: imageUrls.croissants,
     alt: "Fresh croissants ready for morning service",
   },
   {
@@ -154,7 +164,7 @@ const brunchFlow: FlowStep[] = [
     status: "Most ordered this morning: Eggs Benedict.",
     phase: "Peak brunch",
     tone: "rgba(179, 93, 61, 0.12)",
-    image: croqueMadameCloseImage,
+    image: imageUrls.croqueMadameClose,
     alt: "Croque madame plated for brunch service",
   },
   {
@@ -165,7 +175,7 @@ const brunchFlow: FlowStep[] = [
     status: "Second round energy, longer stays, louder tables.",
     phase: "Second round",
     tone: "rgba(217, 144, 115, 0.16)",
-    image: cheersImage,
+    image: imageUrls.cheers,
     alt: "Friends toasting brunch cocktails",
   },
 ];
@@ -318,10 +328,11 @@ export default function Home() {
               >
                 <div className="hero-main-photo">
                   <Image
-                    src={eggsTopImage}
+                    src={imageUrls.eggsTop}
                     alt="Top-down brunch plate with eggs and coffee"
                     fill
                     priority
+                    fetchPriority="high"
                     sizes="(max-width: 980px) 100vw, 50vw"
                     style={{ objectFit: "cover" }}
                   />
@@ -329,7 +340,7 @@ export default function Home() {
 
                 <div className="hero-float-photo hero-float-right">
                   <Image
-                    src={croqueMadameImage}
+                    src={imageUrls.croqueMadame}
                     alt="Croque madame served at Aube"
                     fill
                     sizes="(max-width: 980px) 42vw, 18vw"
@@ -339,7 +350,7 @@ export default function Home() {
 
                 <div className="hero-float-photo hero-float-bottom">
                   <Image
-                    src={frenchOmeletteImage}
+                    src={imageUrls.frenchOmelette}
                     alt="French omelette at Aube"
                     fill
                     sizes="(max-width: 980px) 52vw, 22vw"
@@ -743,7 +754,7 @@ export default function Home() {
             <div className="closing-grid">
               <div className="closing-photo">
                 <Image
-                  src={briochePerdueImage}
+                  src={imageUrls.briochePerdue}
                   alt="Brioche perdue plated for brunch"
                   fill
                   sizes="(max-width: 980px) 100vw, 54vw"

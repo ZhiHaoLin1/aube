@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import coffeeImage from "@/pictures/coffee.jpeg";
+
+const coffeeImageUrl =
+  "https://pub-3fc6787160b4478f981aa86718fca41d.r2.dev/coffee.jpeg";
 
 const navLinks = [
   { label: "Menu", href: "/menu" },
@@ -64,7 +66,7 @@ export default function Footer() {
             }}
           >
             <Image
-              src={coffeeImage}
+              src={coffeeImageUrl}
               alt="Coffee at Aube"
               fill
               sizes="(max-width: 900px) 100vw, 40vw"

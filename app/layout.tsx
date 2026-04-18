@@ -1,6 +1,28 @@
 import type { Metadata } from "next";
+import { Cormorant_Garamond, IBM_Plex_Mono, Manrope } from "next/font/google";
 import "./globals.css";
 import StickyReserveBar from "@/components/StickyReserveBar";
+
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+  variable: "--font-cormorant",
+});
+
+const manrope = Manrope({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  display: "swap",
+  variable: "--font-manrope",
+});
+
+const ibmPlexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  display: "swap",
+  variable: "--font-ibm-plex-mono",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://aubebrunch.com"),
@@ -45,7 +67,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body>
+      <body className={`${cormorant.variable} ${manrope.variable} ${ibmPlexMono.variable}`}>
         {children}
         <StickyReserveBar />
       </body>

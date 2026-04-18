@@ -1,4 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&display=swap");
 @import "tailwindcss";
 
 :root {
@@ -21,9 +20,9 @@
   --border-strong: rgba(43, 31, 26, 0.22);
   --shadow-sm: 0 14px 32px rgba(40, 24, 18, 0.08);
   --shadow-lg: 0 28px 70px rgba(40, 24, 18, 0.14);
-  --font-display: "Cormorant Garamond", Georgia, serif;
-  --font-body: "Manrope", system-ui, sans-serif;
-  --font-menu: "IBM Plex Mono", monospace;
+  --font-display: var(--font-cormorant), Georgia, serif;
+  --font-body: var(--font-manrope), system-ui, sans-serif;
+  --font-menu: var(--font-ibm-plex-mono), monospace;
 }
 
 * {
